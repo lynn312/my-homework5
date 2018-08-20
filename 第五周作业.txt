@@ -1,0 +1,43 @@
+﻿#建如下两张表 
+create table dept 
+( 
+deptno int(11) primary key,  #部门号
+dname varchar(10)         #部门名
+); 
+create table emp 
+( 
+empno int(11) primary key,  #员工工号
+ename varchar(10),        #员工姓名
+job varchar(10),           #员工岗位
+mgr varchar(10),          #员工上司
+sal varchar(10),           #员工薪水
+deptno int(11),           #所在部门号
+foreign key(deptno) references dept(deptno) 
+); 
+#插入如下数据 
+insert into dept values (1,'事业部'); 
+insert into dept values (2,'销售部'); 
+insert into dept values (3,'技术部'); 
+insert into emp values (1,'jacky','clerk','tom',2000,1); 
+insert into emp values (2,'tom','clerk','',2500,1); 
+insert into emp values (7,'biddy','clerk', 'tom',2000,1); 
+insert into emp values (3,'jenny','sales','pretty',600,2); 
+insert into emp values (4,'pretty','sales','',800,2); 
+insert into emp values (5,'buddy','jishu','canndy',1000,3); 
+insert into emp values (6,'canndy','jishu','',1500,3);
+#
+#请回答： 
+#（1）列出各部门的最高工资，最低工资 
+	SELECT MAX(sal),MIN(sal) FROM emp; 
+	SELECT empno FROM emp; 
+#
+#（2）按照各个部门的平均工资由高到低对，列出部门名，平均工资
+#	select did,avg(sar) avg_sar from emp group by did having avg_sar>5000 order by avg_sar
+#（3）根据工资由低而高列出每个员工的姓名，部门名，工资 
+#	SELECT ename,empno,sal FROM emp ORDER BY empno DESC; 
+	SELECT ename,empno,sal FROM emp ORDER BY sal; 
+#（4）对于工资高于本部门平均水平的员工，列出部门号，姓名，工资，按部门号排序 
+#	SELECT empno,ename,sal FROM emp WHERE 
+	sal >= (SELECT AVG(sal) FROM emp) ORDER BY empno; 
+#（5）创建表emp时，最后一行foreign key(deptno) references dept(deptno) 代表什么意思？
+#
